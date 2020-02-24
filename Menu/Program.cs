@@ -58,8 +58,7 @@ namespace Menu
                         x = ' ';
                         Console.Write("\r[{0}]", x);
                         Console.SetCursorPosition(1, index);
-                        x = 'X';
-                        Console.Write("\r[{0}]", x);
+                        x = 'X';                        
                     }
 
                     //Console.Write("\r[{0}]\t\t\t{1}\n", x, processType);
@@ -70,6 +69,8 @@ namespace Menu
                     Thread.Sleep(100);
                 }
 
+                Console.SetCursorPosition(1, index);
+                Console.Write("\r[{0}]", x);
                 Console.SetCursorPosition(1, index);
             }
 
