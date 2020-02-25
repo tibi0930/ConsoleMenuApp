@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Menu
 {
@@ -8,6 +9,8 @@ namespace Menu
     {
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
+            Console.CancelKeyPress += new ConsoleCancelEventHandler(Auxiliary.myHandler);
             Console.WriteLine("**************MENU NAME**************\n");
 
             var MenuItems = new List<string>();
@@ -19,7 +22,6 @@ namespace Menu
             int index = 2;
             int prevIndex = index;
             char x = ' ';
-            string processType = "";
             bool process = false;
             foreach (var item in MenuItems)
             {
@@ -45,12 +47,16 @@ namespace Menu
                             if (2 < index) { prevIndex = index; index--; }
                             break;
                         case ConsoleKey.Enter:
-                            process = true;
+                            {
+                                ProcessItem(index, MenuItems.Count + 2);
+                                process = true;
+                                while (Console.KeyAvailable)
+                                {
+                                    Console.ReadKey(true);
+                                }
+                            }
                             break;
                     }
-
-                    if(process) processType = "Processing";
-                    else processType = "";
 
                     if (prevIndex != index)
                     {
@@ -58,11 +64,10 @@ namespace Menu
                         x = ' ';
                         Console.Write("\r[{0}]", x);
                         Console.SetCursorPosition(1, index);
-                        x = 'X';                        
+                        x = 'X';
                     }
 
                     //Console.Write("\r[{0}]\t\t\t{1}\n", x, processType);
-                    //Write(toWrite, x, y);
                 }
                 else
                 {
@@ -70,17 +75,27 @@ namespace Menu
                 }
 
                 Console.SetCursorPosition(1, index);
-                Console.Write("\r[{0}]", x);
+                Console.Write("\r[{0}]\t\t\t\n", x);
                 Console.SetCursorPosition(1, index);
             }
 
-            
-            
-            
+        }
 
-            
+        
 
-            Console.ReadLine();
+        public static void ProcessItem(int indexOfX, int indexOfBottom)
+        {
+            Auxiliary.Display(indexOfX, indexOfX, true);
+            Console.SetCursorPosition(0, indexOfBottom + 1);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write("Process status:");
+            for (int i = 0; i <= 5; ++i)
+            {
+                Thread.Sleep(1000);
+                Console.Write("\r\t\t{0}%", i * 20);
+            }
+            Auxiliary.Display(indexOfX, indexOfX, false);
         }
     }
 }
