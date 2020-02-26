@@ -48,19 +48,17 @@ namespace MenuApp
         public void Select(bool inProcess)
         {
             string processState = "          ";
+            Console.SetCursorPosition(30, currentPos.vertical);
             if (inProcess)
             {
                 processState = "Processing";
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("\r[X]\t\t\t{0}\n", processState);
+                Console.Write("{0}", processState);
                 SetCursorPosition(0, menuLength + 4);
-                Console.Write(new string(' ', Console.WindowWidth));
-                SetCursorPosition(0, Console.CursorTop);
             }
             else
             {
-                SetCursorPosition(currentPos);
-                Console.Write("\r[X]\t\t\t{0}\n", processState);
+                Console.Write("{0}", processState);
                 SetCursorPosition(currentPos);
             }
 
@@ -73,7 +71,7 @@ namespace MenuApp
             if (delete) mark = ' ';
 
             SetCursorPosition(position);
-            Console.Write("\r[{0}]\t\t\t\n", mark);
+            Console.Write("\r[{0}]", mark);
             SetCursorPosition(position);
         }
 
