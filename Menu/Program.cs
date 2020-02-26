@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Menu
+namespace ConsoleMenu
 {
     class Program
     {
@@ -11,7 +11,7 @@ namespace Menu
         {
             Console.CursorVisible = false;
             Console.CancelKeyPress += new ConsoleCancelEventHandler(Auxiliary.myHandler);
-            Console.WriteLine("**************MENU NAME**************\n");
+            Console.WriteLine("**************MENU NAME**************\n\n");
 
             var MenuItems = new List<string>();
             MenuItems.Add("Menu item 1");

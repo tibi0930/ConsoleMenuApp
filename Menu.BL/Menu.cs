@@ -1,15 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Menu.BL
+namespace MenuApp.BL
 {
-    internal class Menu
+    public class Menu
     {
-        public List<MenuItem> MenuItems;
+        private List<MenuItem> menuItems;
 
-        public void AddItem(string name, )
+        public Menu()
         {
-            
+            menuItems = new List<MenuItem>();
+        }
+
+        public List<MenuItem> MenuItems { get => menuItems; }
+
+        public void AddItem(string name)
+        {
+            menuItems.Add(new MenuItem(name));
+        }
+
+        public void RunCommand(int index)
+        {
+            menuItems[index].Run();
         }
     }
 }

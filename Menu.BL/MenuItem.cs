@@ -1,8 +1,13 @@
-﻿namespace Menu.BL
+﻿namespace MenuApp.BL
 {
-    internal class MenuItem
+    public class MenuItem
     {
         public string Name { get; }
+
+        public MenuItem(string name)
+        {
+            Name = name;
+        }
 
         public virtual void Run()
         {
