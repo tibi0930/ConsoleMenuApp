@@ -14,6 +14,7 @@ namespace MenuApp
         {
             this.title = title;
             this.menu = menu;
+            Console.Title = title;
         }
 
         public string Title

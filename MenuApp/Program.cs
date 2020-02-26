@@ -7,6 +7,7 @@ namespace MenuApp
     {
         static void Main(string[] args)
         {
+            Console.Clear();
             Console.CursorVisible = false;
             Console.CancelKeyPress += new ConsoleCancelEventHandler(Auxiliary.myHandler);
 
