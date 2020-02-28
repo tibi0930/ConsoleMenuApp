@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Threading;
 
-namespace MenuApp.BL
+namespace MenuApp
 {
-    public class MenuItem
+    public static class WritePercentage
     {
-        public string Name { get; }
-
-        public MenuItem(string name)
-        {
-            Name = name;
-        }
-
-        public void Command() { }
-
-        public virtual void Run()
+        public static void Run()
         {
             Console.Write("Process status:");
             Console.Write(new string(' ', Console.WindowWidth));

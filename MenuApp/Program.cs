@@ -1,5 +1,4 @@
-﻿using MenuApp.BL;
-using System;
+﻿using System;
 
 namespace MenuApp
 {
@@ -11,14 +10,7 @@ namespace MenuApp
             Console.CursorVisible = false;
             Console.CancelKeyPress += new ConsoleCancelEventHandler(Auxiliary.myHandler);
 
-            var menu = new Menu();
-            menu.AddItem("Menu Item 1.");
-            menu.AddItem("Menu Item 2.");
-            menu.AddItem("Menu Item 3.");
-
-
-
-            var terminal = new Terminal("MENU NAME", menu);
+            var terminal = new Terminal("MANU NAME");
             terminal.Run();
 
         }
