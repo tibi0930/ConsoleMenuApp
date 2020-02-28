@@ -16,6 +16,8 @@ namespace MenuApp
             menu.AddItem("Menu Item 2.");
             menu.AddItem("Menu Item 3.");
 
+
+
             var terminal = new Terminal("MENU NAME", menu);
             terminal.Run();
 

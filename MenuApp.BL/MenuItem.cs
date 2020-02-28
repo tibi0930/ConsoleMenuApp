@@ -12,6 +12,8 @@ namespace MenuApp.BL
             Name = name;
         }
 
+        public void Command() { }
+
         public virtual void Run()
         {
             Console.Write("Process status:");

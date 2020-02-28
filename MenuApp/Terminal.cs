@@ -17,17 +17,9 @@ namespace MenuApp
             Console.Title = title;
         }
 
-        public string Title
-        {
-            get
-            {
-                return $"*************{title}*************\n\n";
-            }
-        }
-
         public void Run()
         {
-            Console.Write(Title);
+            Console.WriteLine($"*************{title}*************\n");
             foreach (var item in menu.MenuItems)
             {
                 Console.WriteLine($"[ ]{item.Name}");
