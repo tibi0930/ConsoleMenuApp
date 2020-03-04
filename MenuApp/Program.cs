@@ -9,8 +9,7 @@ namespace MenuApp
         {
             UI.DisplayMenu("MENU NAME");
 
-            bool isExit = false;
-            while (!isExit)
+            while (!UI.IsExit)
             {
                 keyCommand command = UI.ReadKey();
 
@@ -43,14 +42,9 @@ namespace MenuApp
                             UI.ProcessFinished();
                         }
                         break;
-                    case keyCommand.Exit:
-                        {
-                            UI.ExitMenu();
-                            isExit = true;
-                        }
-                        break;
                 }
             }
+            UI.ExitMenu();
         }
         private static void RunPercentage()
         {

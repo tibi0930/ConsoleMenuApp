@@ -10,8 +10,7 @@ namespace MenuApp
         None,
         Up,
         Down,
-        Enter,
-        Exit
+        Enter
     }
 
     public enum MenuItems
@@ -28,6 +27,9 @@ namespace MenuApp
     {
         private static int currentLine;
         private readonly static int menuLength = Enum.GetNames(typeof(MenuItems)).Length;
+
+        private static bool isExit = false;
+        public static bool IsExit => isExit;
 
         internal static void MoveDown()
         {
@@ -102,7 +104,7 @@ namespace MenuApp
                         {
                             if (currentLine == menuLength)
                             {
-                                result = keyCommand.Exit;
+                                isExit = true;
                             }
                             else
                             {
