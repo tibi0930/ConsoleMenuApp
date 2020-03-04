@@ -57,8 +57,8 @@ namespace MenuApp
             keyCommand result = keyCommand.None;
             if (Console.KeyAvailable)
             {
-                var command = Console.ReadKey().Key;
-                switch (command)
+                var command = Console.ReadKey(true);
+                switch (command.Key)
                 {
                     case ConsoleKey.DownArrow:
                         result = keyCommand.Down;
