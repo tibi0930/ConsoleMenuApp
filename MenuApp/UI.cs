@@ -10,7 +10,8 @@ namespace MenuApp
         None,
         Up,
         Down,
-        Enter
+        Enter,
+        Exit
     }
 
     public enum MenuItems
@@ -25,19 +26,42 @@ namespace MenuApp
 
     internal static class UI
     {
-        public static string GetValueAsString(this MenuItems environment)
-        {
-            var field = environment.GetType().GetField(environment.ToString());
-            var customAttributes = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
+        private static int currentLine;
+        private readonly static int menuLength = Enum.GetNames(typeof(MenuItems)).Length;
 
-            if (customAttributes.Length > 0)
-            {
-                return (customAttributes[0] as DescriptionAttribute).Description;
-            }
-            else
-            {
-                return environment.ToString();
-            }
+        internal static void MoveDown()
+        {
+            DrawX(currentLine, true);
+            currentLine++;
+            DrawX(currentLine);
+        }
+
+        internal static void MoveUp()
+        {
+            DrawX(currentLine, true);
+            currentLine--;
+            DrawX(currentLine);
+        }
+
+        internal static void Enter()
+        {
+            Select(currentLine, true);
+            ClearResult(menuLength);
+        }
+
+        internal static MenuItems GetCurrentElement()
+        {
+            return (MenuItems)currentLine;
+        }
+
+        internal static void ProcessFinished()
+        {
+            Select(currentLine, false);
+        }
+
+        internal static void ExitMenu()
+        {
+            Console.SetCursorPosition(0, menuLength + 5);
         }
 
         public static void DisplayMenu(string title)
@@ -50,6 +74,8 @@ namespace MenuApp
                 Console.WriteLine($"[ ]{item.GetValueAsString()}");
             }
             Console.WriteLine("[ ]Exit");
+            currentLine = 0;
+            DrawX(currentLine);
         }
 
         internal static keyCommand ReadKey()
@@ -61,20 +87,48 @@ namespace MenuApp
                 switch (command.Key)
                 {
                     case ConsoleKey.DownArrow:
-                        result = keyCommand.Down;
+                        if (currentLine < menuLength)
+                        {
+                            result = keyCommand.Down;
+                        }
                         break;
                     case ConsoleKey.UpArrow:
-                        result = keyCommand.Up;
+                        if (0 < currentLine)
+                        {
+                            result = keyCommand.Up;
+                        }
                         break;
                     case ConsoleKey.Enter:
-                        result = keyCommand.Enter;
+                        {
+                            if (currentLine == menuLength)
+                            {
+                                result = keyCommand.Exit;
+                            }
+                            else
+                            {
+                                result = keyCommand.Enter;
+                            }
+                        }
                         break;
                 }
             }
             return result;
         }
 
-        internal static void DrawX(int line, bool delete = false)
+        internal static void DisplayResult()
+        { 
+            Console.Write("{0} process status:", ((MenuItems)currentLine).GetValueAsString());
+            Console.SetCursorPosition(30, Console.CursorTop);
+        }
+
+        internal static void DisplayPercentage(int i)
+        {
+            Console.SetCursorPosition(30, Console.CursorTop);
+            Console.Write("{0}%", i * 20);
+        }
+
+        #region private methods
+        private static void DrawX(int line, bool delete = false)
         {
             char mark = 'X';
             if (delete) mark = ' ';
@@ -84,7 +138,7 @@ namespace MenuApp
             Console.SetCursorPosition(1, line + 2);
         }
 
-        internal static void Select(int line, bool inProcess)
+        private static void Select(int line, bool inProcess)
         {
             string processState = "          ";
             Console.SetCursorPosition(30, line + 2);
@@ -102,23 +156,27 @@ namespace MenuApp
             Console.ResetColor();
         }
 
-        internal static void ClearResult(int startLine)
+        private static void ClearResult(int startLine)
         {
             Console.SetCursorPosition(0, startLine + 4);
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, Console.CursorTop);
         }
 
-        internal static void DisplayResult()
-        { 
-            Console.Write("Process status:");
-            Console.SetCursorPosition(18, Console.CursorTop);
-        }
-
-        internal static void DisplayPercentage(int i)
+        private static string GetValueAsString(this MenuItems environment)
         {
-            Console.SetCursorPosition(18, Console.CursorTop);
-            Console.Write("{0}%", i * 20);
+            var field = environment.GetType().GetField(environment.ToString());
+            var customAttributes = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            if (customAttributes.Length > 0)
+            {
+                return (customAttributes[0] as DescriptionAttribute).Description;
+            }
+            else
+            {
+                return environment.ToString();
+            }
         }
+        #endregion
     }
 }
